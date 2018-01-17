@@ -70,10 +70,17 @@ module Decidim
                     active: :inclusive,
                     if: can?(:index, Decidim::Newsletter)
 
+          menu.item I18n.t("menu.hashtags", scope: "decidim.admin"),
+                    decidim_admin.hashtags_path,
+                    icon_name: "tags",
+                    position: 7,
+                    active: :inclusive,
+                    if: can?(:index, Decidim::Hashtag)
+
           menu.item I18n.t("menu.settings", scope: "decidim.admin"),
                     decidim_admin.edit_organization_path,
                     icon_name: "wrench",
-                    position: 7,
+                    position: 8,
                     active: [%w(decidim/admin/organization decidim/admin/scopes), []],
                     if: can?(:read, current_organization)
         end

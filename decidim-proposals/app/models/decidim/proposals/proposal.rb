@@ -13,6 +13,7 @@ module Decidim
       include Decidim::Reportable
       include Decidim::HasAttachments
       include Decidim::Followable
+      # include Decidim::Hashtaggable
       include Decidim::Comments::Commentable
 
       feature_manifest_name "proposals"

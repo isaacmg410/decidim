@@ -46,6 +46,8 @@ Decidim::Admin::Engine.routes.draw do
       end
     end
 
+    resources :hashtags
+    
     resources :user_groups, only: [:index] do
       member do
         put :verify

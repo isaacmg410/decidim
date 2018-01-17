@@ -38,6 +38,7 @@ module Decidim
           can :manage, Scope
           can :manage, ScopeType
           can :manage, Newsletter
+          can :manage, Hashtag
           can [:create, :index, :new, :read, :invite], User
 
           can [:destroy], [User] do |user_to_destroy|
