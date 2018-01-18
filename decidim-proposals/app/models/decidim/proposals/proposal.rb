@@ -13,8 +13,8 @@ module Decidim
       include Decidim::Reportable
       include Decidim::HasAttachments
       include Decidim::Followable
-      # include Decidim::Hashtaggable
       include Decidim::Comments::Commentable
+      include Decidim::Hashtaggable
 
       feature_manifest_name "proposals"
 
@@ -30,6 +30,8 @@ module Decidim
       scope :evaluating, -> { where(state: "evaluating") }
       scope :withdrawn, -> { where(state: "withdrawn") }
       scope :except_withdrawn, -> { where.not(state: "withdrawn").or(where(state: nil)) }
+
+      hashtaggable_attributes :title, :body
 
       def self.order_randomly(seed)
         transaction do

@@ -2,15 +2,9 @@
 
 module Decidim
   class Hashtagging < ApplicationRecord
-    DEFAULT_CONTEXT = 'hashtags'
+    self.table_name = "decidim_hashtaggings"
 
-    belongs_to :hashtag, class_name: 'Decidim::Hashtag', counter_cache: "decidim_hashtaggings_count"
-    belongs_to :hashtaggable, polymorphic: true
-
-    scope :by_contexts, ->(contexts) { where(context: (contexts || DEFAULT_CONTEXT)) }
-    scope :by_context, ->(context = DEFAULT_CONTEXT) { by_contexts(context.to_s) }
-
-    validates :context, :hashtag_id, presence: true
-    
+    belongs_to :decidim_hashtag, class_name: 'Decidim::Hashtag'
+    belongs_to :decidim_hashtaggable, class_name: 'Decidim::Hashtaggable', polymorphic: true
   end
 end

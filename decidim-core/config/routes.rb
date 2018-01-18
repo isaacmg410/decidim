@@ -67,5 +67,7 @@ Decidim::Core::Engine.routes.draw do
     get :unsubscribe, on: :collection
   end
 
+  resources :hashtags, only: [:index, :show], param: :hashtag
+
   root to: "pages#show", id: "home"
 end
