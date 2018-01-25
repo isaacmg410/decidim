@@ -8,8 +8,9 @@ module Decidim
       skip_authorization_check
 
       def hashtags
-        result = Hashtag.where(organization: current_organization).map{|h| { id: h.id, name: h.name}}
-        render json: result
+        respond_to do |format|
+         format.json{ render :json => Hashtag.where(organization: current_organization).where('name like ?', "#{params[:q]}%").pluck(:name).compact}
+        end
       end
     end
   end
