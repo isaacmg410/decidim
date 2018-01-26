@@ -15,6 +15,8 @@
 // = require decidim/data_picker
 // = require decidim/append_redirect_url_to_modals
 
+// = require jquery.atwho
+
 /* globals svg4everybody */
 
 window.Decidim = window.Decidim || {};

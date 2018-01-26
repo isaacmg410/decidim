@@ -49,6 +49,9 @@ module Decidim
   autoload :Events, "decidim/events"
   autoload :ViewHooks, "decidim/view_hooks"
   autoload :NewsletterEncryptor, "decidim/newsletter_encryptor"
+  autoload :Hashtag, "decidim/hashtag"
+  autoload :Hashtagging, "decidim/hashtagging"
+  autoload :Hashtaggable, "decidim/hashtaggable"
 
   include ActiveSupport::Configurable
 

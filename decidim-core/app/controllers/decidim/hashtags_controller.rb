@@ -2,6 +2,8 @@
 
 module Decidim
   class HashtagsController < Decidim::ApplicationController
+    include Decidim::ResourceHelper
+    
     skip_authorization_check
 
     helper_method :hashtag
@@ -23,6 +25,5 @@ module Decidim
     def collection
       Hashtag.where(organization: current_organization)
     end
-
   end
 end

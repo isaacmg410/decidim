@@ -5,11 +5,11 @@
 
   <div class="card-section">
     <div class="row column">
-      <%= form.text_field :title %>
+      <%= form.text_field :title, data:{ behavior:"hashtaggale" } %>
     </div>
 
     <div class="row column">
-      <%= form.text_area :body, rows: 10 %>
+      <%= form.text_area :body, rows: 10, data:{ behavior:"hashtaggale" } %>
     </div>
 
     <% if feature_settings.geocoding_enabled? %>
@@ -48,3 +48,12 @@
     <% end %>
   </div>
 </div>
+<script>
+  $(function(){
+    $('[data-behavior=hashtaggale]').atwho({
+      at:"#",
+      data:'/api/hashtags/hashtags.json',
+      insertTpl: '#${name}'
+    });
+  });
+</script>

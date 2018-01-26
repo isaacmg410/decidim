@@ -6,17 +6,15 @@ module Decidim
     extend ActiveSupport::Concern
 
     included do
-      has_many :decidim_hashtaggings, as: :decidim_hashtaggable,  dependent: :destroy, class_name: "Decidim::Hashtagging"
+      has_many :decidim_hashtaggings, as: :decidim_hashtaggable, dependent: :destroy, class_name: "Decidim::Hashtagging"
       has_many :decidim_hashtags, through: :decidim_hashtaggings, class_name: "Decidim::Hashtag"
-
       before_save :update_hashtags
 
       def hashtaggable_content
         self.class.hashtaggable_attributes
-
         content = ""
         self.class.hashtaggable_attribute_name.each do |field|
-          content += self.send(field) + " "
+          content += send(field) + " "
         end
         content.to_s
       end
@@ -29,7 +27,7 @@ module Decidim
         parsed_hashtags = []
         array_of_hashtags_as_string = scan_for_hashtags(hashtaggable_content)
         array_of_hashtags_as_string.each do |s|
-          parsed_hashtags << Decidim::Hashtag.find_or_create_by(decidim_organization_id: self.organization.id, name: s[1])
+          parsed_hashtags << Decidim::Hashtag.find_or_create_by(decidim_organization_id: organization.id, name: s[1])
         end
         parsed_hashtags
       end
@@ -40,7 +38,7 @@ module Decidim
         match
       end
     end
-
+    
     module ClassMethods
       attr_accessor :hashtaggable_attribute_name
 

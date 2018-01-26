@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
   s.add_dependency "geocoder", "~> 1.4"
   s.add_dependency "high_voltage", "~> 3.0"
   s.add_dependency "invisible_captcha", "~> 0.10.0"
+  s.add_dependency "jquery-atwho-rails"
   s.add_dependency "jquery-rails", "~> 4.3"
   s.add_dependency "mini_magick", "~> 4.8"
   s.add_dependency "omniauth", "~> 1.6"
