@@ -1,0 +1,19 @@
+<div class="column">
+  <article class="card">
+    <div class="card__content">
+      <div class="card__header">
+        <%= link_to resource_link do%>
+          <h5 class="card__title"><%= translated_attribute(resource.title) %></h5>
+          <p> <%= resource.class.name %> </p>
+        <% end %>
+      </div>
+      <p><%= truncate(resource.try(:body), length: 100) || sanitize(html_truncate(translated_attribute(resource.try(:description)), length: 630, separator: '...'))  %></p>
+    </div>
+    <div class="card__footer">
+      <div class="card__support">
+        <div class="card__support__data"></div>
+        <%= link_to "view", resource_link, class: "card__button button small secondary" %>
+      </div>
+    </div>
+  </article>
+</div>

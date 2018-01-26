@@ -30,4 +30,20 @@ $(() => {
   if (window.Decidim.formDatePicker) {
     window.Decidim.formDatePicker();
   }
+
+  $('[data-behavior=hashtaggale]').atwho({
+    at:"#",
+    insertTpl: '#${name}',
+    callbacks: {
+      remoteFilter: function(query, callback){
+        if (query.length < 3){
+          return false
+        }else{
+          $.getJSON('/api/hashtags/hashtags', { q: query }, function(data) {
+            callback(data)
+          });
+        }
+      }
+    }
+  });
 });

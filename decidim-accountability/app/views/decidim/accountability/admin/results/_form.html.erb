@@ -5,11 +5,11 @@
 
   <div class="card-section">
     <div class="row column">
-      <%= form.translated :text_field, :title, autofocus: true %>
+      <%= form.translated :text_field, :title, autofocus: true, data:{ behavior:"hashtaggale" } %>
     </div>
 
     <div class="row column">
-      <%= form.translated :editor, :description %>
+      <%= form.translated :editor, :description, data:{ behavior:"hashtaggale" } %>
     </div>
 
     <% if @form.parent_id %>

@@ -12,6 +12,7 @@ module Decidim
       include Decidim::HasReference
       include Decidim::Comments::Commentable
       include Decidim::Traceable
+      include Decidim::Hashtaggable
 
       feature_manifest_name "accountability"
 
@@ -24,6 +25,8 @@ module Decidim
                                                              class_name: "Decidim::Accountability::TimelineEntry", inverse_of: :result, dependent: :destroy
 
       after_save :update_parent_progress, if: -> { parent_id.present? }
+
+      hashtaggable_attributes :title, :description
 
       def update_parent_progress
         return if parent.blank?

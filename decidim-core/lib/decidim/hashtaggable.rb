@@ -14,7 +14,13 @@ module Decidim
         self.class.hashtaggable_attributes
         content = ""
         self.class.hashtaggable_attribute_name.each do |field|
-          content += send(field) + " "
+          if field.is_a?(Hash)
+            I18n.available_locales.each do |locale|
+              content += send(field)[locale.to_s] + " "
+            end
+          else
+            content += send(field) + " "
+          end
         end
         content.to_s
       end
@@ -38,7 +44,7 @@ module Decidim
         match
       end
     end
-    
+
     module ClassMethods
       attr_accessor :hashtaggable_attribute_name
 

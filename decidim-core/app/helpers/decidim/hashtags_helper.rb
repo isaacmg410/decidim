@@ -13,7 +13,14 @@ module Decidim
     def render_hashtaggable(hashtaggable)
       klass = hashtaggable.class.to_s.underscore
       partial = klass.split("/").last
-      render partial.to_s, resource: hashtaggable
+      case partial
+      when "proposal"
+        resource_link = decidim_participatory_process_proposals.proposal_path(participatory_process_slug: hashtaggable.feature.participatory_space.slug, feature_id: hashtaggable.feature.id, id: hashtaggable.id)
+      when "result"
+        resource_link = ""
+      end
+      render "card", resource: hashtaggable, resource_link: resource_link
+      # render "#{klass.pluralize.to_s}/#{partial.to_s}", resource: hashtaggable, hashtaggable_link:
     end
   end
 end

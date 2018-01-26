@@ -8,10 +8,14 @@ module Decidim
   # Pages with a default slug cannot be destroyed and its slug cannot be
   # modified.
   class StaticPage < ApplicationRecord
+    include Decidim::Hashtaggable
+
     belongs_to :organization, foreign_key: "decidim_organization_id", class_name: "Decidim::Organization", inverse_of: :static_pages
 
     validates :slug, presence: true, uniqueness: { scope: :organization }
     validates :slug, format: { with: /\A[a-z0-9-]+/ }
+
+    hashtaggable_attributes :title, :content
 
     # These pages will be created by default when registering an organization
     # and cannot be deleted.

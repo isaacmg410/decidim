@@ -5,11 +5,14 @@ module Decidim
     # The data store for a Survey in the Decidim::Surveys component.
     class Survey < Surveys::ApplicationRecord
       include Decidim::HasFeature
+      include Decidim::Hashtaggable
 
       feature_manifest_name "surveys"
 
       has_many :questions, -> { order(:position) }, class_name: "SurveyQuestion", foreign_key: "decidim_survey_id", dependent: :destroy
       has_many :answers, class_name: "SurveyAnswer", foreign_key: "decidim_survey_id", dependent: :destroy
+
+      hashtaggable_attributes :title, :description
 
       # Public: returns whether the survey questions can be modified or not.
       def questions_editable?

@@ -13,6 +13,7 @@ module Decidim
       include Decidim::HasCategory
       include Decidim::Followable
       include Decidim::Comments::Commentable
+      include Decidim::Hashtaggable
 
       has_many :registrations, class_name: "Decidim::Meetings::Registration", foreign_key: "decidim_meeting_id", dependent: :destroy
 
@@ -21,6 +22,8 @@ module Decidim
       validates :title, presence: true
 
       geocoded_by :address, http_headers: ->(proposal) { { "Referer" => proposal.feature.organization.host } }
+
+      hashtaggable_attributes :title, :description
 
       def closed?
         closed_at.present?

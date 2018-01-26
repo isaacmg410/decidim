@@ -7,8 +7,11 @@ module Decidim
     class Page < Pages::ApplicationRecord
       include Decidim::Resourceable
       include Decidim::HasFeature
+      include Decidim::Hashtaggable
 
       feature_manifest_name "pages"
+
+      hashtaggable_attributes :body
 
       # Public: Pages doesn't have title so we assign the feature one to it.
       def title

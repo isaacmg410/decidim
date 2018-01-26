@@ -13,10 +13,13 @@ module Decidim
       include Decidim::HasReference
       include Decidim::Followable
       include Decidim::Comments::Commentable
+      include Decidim::Hashtaggable
 
       feature_manifest_name "budgets"
       has_many :line_items, class_name: "Decidim::Budgets::LineItem", foreign_key: "decidim_project_id", dependent: :destroy
       has_many :orders, through: :line_items, foreign_key: "decidim_project_id", class_name: "Decidim::Budgets::Order"
+
+      hashtaggable_attributes :title, :description
 
       # Public: Overrides the `commentable?` Commentable concern method.
       def commentable?

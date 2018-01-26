@@ -3,7 +3,7 @@
 module Decidim
   class HashtagsController < Decidim::ApplicationController
     include Decidim::ResourceHelper
-    
+
     skip_authorization_check
 
     helper_method :hashtag
