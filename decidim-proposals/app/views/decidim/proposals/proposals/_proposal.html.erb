@@ -3,7 +3,7 @@
     <div class="card__content">
       <div class="card__header">
         <%= link_to proposal do%>
-          <h5 class="card__title"><%= proposal.title %></h5>
+          <h5 class="card__title"><%= content_title_renderer(proposal.title) %></h5>
         <% end %>
         <div class="card__author author-data author-data--small">
           <%= render partial: "decidim/shared/author_reference", locals: { author: present(proposal).author } %>
@@ -14,7 +14,7 @@
         <%= feature_reference(proposal, class: "tech-info--text-left") %>
       </div>
       <%= render partial: "proposal_badge", locals: { proposal: proposal } %>
-      <p><%= truncate(proposal.body, length: 100) %></p>
+      <p><%= html_truncate(content_renderer(proposal.body), length: 100).html_safe %></p>
       <%= render partial: "decidim/shared/tags", locals: { resource: proposal, tags_class_extra: "tags--proposal" } %>
     </div>
     <div class="card__footer">

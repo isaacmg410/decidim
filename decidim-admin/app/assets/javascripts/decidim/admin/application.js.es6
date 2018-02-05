@@ -48,7 +48,7 @@ $(() => {
     window.Decidim.formDatePicker();
   }
 
-  $('[data-behavior=hashtaggale]').atwho({
+  $('[data-behavior=hashtaggable]').atwho({
     at:"#",
     insertTpl: '#${name}',
     callbacks: {

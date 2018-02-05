@@ -11,9 +11,7 @@ module Decidim
     validates :name, presence: true
     validates :name, uniqueness: { scope: [:decidim_organization_id] }
 
-    # this is how Twitter does it:
-    # https://github.com/twitter/twitter-text-rb/blob/master/lib/twitter-text/regex.rb
-    HASHTAG_REGEX = /(?:\s|^)(#(?!(?:\d+|\w+?_|_\w+?)(?:\s|$))([a-z0-9\-_]+))/i
+    HASHTAG_REGEX = /(^|\s)#([a-zA-Z0-9]\w*)/i
 
     def hashtaggables
       decidim_hashtaggings.includes(:decidim_hashtaggable).collect { |h| h.decidim_hashtaggable }

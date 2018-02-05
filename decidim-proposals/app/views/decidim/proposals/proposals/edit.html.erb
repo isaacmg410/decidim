@@ -16,11 +16,11 @@
       <div class="card__content">
         <%= decidim_form_for(@form) do |form| %>
           <div class="field">
-            <%= form.text_field :title, data:{ behavior:"hashtaggale" }  %>
+            <%= form.text_field :title, data:{ behavior:"hashtaggable" }  %>
           </div>
 
           <div class="field">
-            <%= form.text_area :body, rows: 10, data:{ behavior:"hashtaggale" }  %>
+            <%= form.text_area :body, rows: 10, data:{ behavior:"hashtaggable" }  %>
           </div>
 
           <% if feature_settings.geocoding_enabled? %>

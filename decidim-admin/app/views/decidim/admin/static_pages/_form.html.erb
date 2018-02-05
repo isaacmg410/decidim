@@ -1,5 +1,5 @@
 <div class="row column">
-  <%= form.translated :text_field, :title, autofocus: true, data:{ behavior:"hashtaggale" } %>
+  <%= form.translated :text_field, :title, autofocus: true, data:{ behavior:"hashtaggable" } %>
 </div>
 
 <% if can? :update_slug, form.object %>
@@ -9,5 +9,5 @@
 <% end %>
 
 <div class="row column">
-  <%= form.translated :editor, :content, toolbar: :full, lines: 25, data:{ behavior:"hashtaggale" } %>
+  <%= form.translated :editor, :content, toolbar: :full, lines: 25, data:{ behavior:"hashtaggable" } %>
 </div>

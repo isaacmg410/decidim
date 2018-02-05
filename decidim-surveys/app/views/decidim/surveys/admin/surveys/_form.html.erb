@@ -9,10 +9,10 @@
   </div>
   <div class="card-section">
     <div class="row column">
-      <%= form.translated :text_field, :title, autofocus: true, data:{ behavior:"hashtaggale" } %>
+      <%= form.translated :text_field, :title, autofocus: true, data:{ behavior:"hashtaggable" } %>
     </div>
     <div class="row column">
-      <%= form.translated :editor, :description, toolbar: :full, lines: 30, label: t("models.components.description", scope: "decidim.surveys.admin"), data:{ behavior:"hashtaggale" }  %>
+      <%= form.translated :editor, :description, toolbar: :full, lines: 30, label: t("models.components.description", scope: "decidim.surveys.admin"), data:{ behavior:"hashtaggable" }  %>
     </div>
     <div class="row column">
       <%= form.translated :editor, :tos, toolbar: :full, lines: 10, label: t("models.components.tos", scope: "decidim.surveys.admin")  %>

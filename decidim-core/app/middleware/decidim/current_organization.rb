@@ -18,9 +18,11 @@ module Decidim
       organization = detect_current_organization(env)
       if organization
         env["decidim.current_organization"] = organization
+        Thread.current[:organization] = organization
         @app.call(env)
       else
         organization = find_secondary_host_org(env)
+        Thread.current[:organization] = organization
         return @app.call(env) unless organization
 
         location = new_location_for(env, organization.host)

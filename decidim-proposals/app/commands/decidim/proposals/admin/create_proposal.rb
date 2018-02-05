@@ -39,9 +39,12 @@ module Decidim
         attr_reader :form, :proposal, :attachment
 
         def create_proposal
+          parser_title = Decidim::ContentProcessor.parse(form.title)
+          parser = Decidim::ContentProcessor.parse(form.body)
+
           @proposal = Proposal.create!(
-            title: form.title,
-            body: form.body,
+            title: parser_title.rewrite,
+            body: parser.rewrite,
             category: form.category,
             scope: form.scope,
             feature: form.feature,

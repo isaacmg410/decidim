@@ -15,7 +15,7 @@ module Decidim
       include Decidim::Followable
       include Decidim::Comments::Commentable
       include Decidim::Hashtaggable
-  
+
       feature_manifest_name "proposals"
 
       has_many :votes, foreign_key: "decidim_proposal_id", class_name: "ProposalVote", dependent: :destroy, counter_cache: "proposal_votes_count"
@@ -31,7 +31,8 @@ module Decidim
       scope :withdrawn, -> { where(state: "withdrawn") }
       scope :except_withdrawn, -> { where.not(state: "withdrawn").or(where(state: nil)) }
 
-      hashtaggable_attributes :title, :body
+      # hashtaggable_attributes :title, :body
+      # hashtaggable_attributes :body
 
       def self.order_randomly(seed)
         transaction do

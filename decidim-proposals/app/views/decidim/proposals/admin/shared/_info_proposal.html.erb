@@ -8,7 +8,8 @@
 
   <div class="card-section">
     <div class="row column">
-      <strong><%= t ".body" %>: </strong><%= proposal.body %>
+      <% renderer = Decidim::ContentRenderers::HashtagRenderer.new(proposal.body)%>
+      <strong><%= t ".body" %>: </strong><%= renderer.render.html_safe %>
     </div>
     <div class="row column">
       <strong><%= t ".created_at" %>: </strong> <%= l proposal.created_at, format: :decidim_short  %>

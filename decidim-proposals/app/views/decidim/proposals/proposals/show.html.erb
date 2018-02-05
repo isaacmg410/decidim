@@ -1,12 +1,12 @@
 <% add_decidim_meta_tags({
   description: @proposal.body,
-  title: @proposal.title,
+  title: content_title_renderer(@proposal.title),
   url: proposal_url(@proposal.id)
 }) %>
 
 <%= render partial: "voting_rules" %>
 <div class="row column view-header">
-  <h2 class="heading2"><%= @proposal.title %></h2>
+  <h2 class="heading2"><%= content_title_renderer(@proposal.title) %></h2>
   <div class="author-data">
     <%= render partial: "decidim/shared/author_reference", locals: { author: Decidim::Proposals::ProposalPresenter.new(@proposal).author } %>
     <div class="author-data__extra">
@@ -50,8 +50,7 @@
   <div class="columns mediumlarge-8 mediumlarge-pull-4">
     <div class="section">
       <%= render partial: "proposal_badge", locals: { proposal: @proposal } %>
-      <%= linkify_hashtags(@proposal.body) %>
-      <%#= simple_format @proposal.body %>
+      <%= content_renderer(simple_format(@proposal.body)) %>
       <% if feature_settings.geocoding_enabled? %>
         <%= render partial: "decidim/shared/static_map", locals: { icon_name: "proposals", geolocalizable: @proposal } %>
       <% end %>
