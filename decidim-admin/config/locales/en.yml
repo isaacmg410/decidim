@@ -30,6 +30,12 @@ en:
       newsletter:
         body: Body
         subject: Subject
+      oauth_application:
+        name: Name
+        organization_logo: Organization logo (square)
+        organization_name: Organization name
+        organization_url: Organization URL
+        redirect_uri: Redirect URI
       organization:
         cta_button_path: Call To Action button path
         cta_button_text: Call To Action button text
@@ -112,6 +118,14 @@ en:
         content: Content
         slug: URL slug
         title: Title
+      doorkeeper/application:
+        authorize_url: Authorize URL
+        client_id: Client ID
+        client_secret: Client Secret
+        organization_name: Organization name
+        organization_url: Organization URL
+        redirect_uri: Redirect URI
+        site: Site
   date:
     formats:
       datepicker: "%m/%d/%Y"
@@ -302,6 +316,7 @@ en:
         dashboard: Dashboard
         managed_users: Managed users
         newsletters: Newsletters
+        oauth_applications: OAuth applications
         officializations: Officializations
         scope_types: Scope types
         scopes: Scopes
@@ -345,6 +360,11 @@ en:
             sent_at: Sent at
             subject: Subject
           name: Newsletter
+        oauth_application:
+          fields:
+            created_at: Created at
+            name: Name
+          name: OAuth application
         scope:
           fields:
             name: Name
@@ -414,6 +434,27 @@ en:
         update:
           error: There's been an error updating this newsletter.
           success: Newsletter updated successfully. Please review it before sending.
+      o_auth_applications:
+        create:
+          error: There's been an error creating this application.
+          success: Application created successfully.
+        destroy:
+          error: There's been an error destroying this application.
+          success: Application destroyed successfully.
+        edit:
+          save: Save
+          title: Edit application
+        index:
+          confirm_delete: Are you sure you want to delete this application?
+          title: OAuth applications
+        new:
+          save: Save
+          title: New application
+        show:
+          name: Name
+        update:
+          error: There's been an error updating this application.
+          success: Application updated successfully.
       officializations:
         create:
           success: User officialized successfully

@@ -4,7 +4,7 @@ defaults: &defaults
   docker:
     # This is the sha of the latest `decidim/decidim:latest-test` docker image. You can retrieve the
     # latest digest by doing `$ docker pull decidim/decidim:latest-dev`.
-    - image: decidim/decidim@sha256:348fb1faa49cfe76ba7cbeafc67ca09002cf95f0ffa7a76eefa9d5b3774e0ee9
+    - image: decidim/decidim@sha256:6ec914a666c99eb8069d4471ae72d713ea4ff71d23335d995d3bb32afd9c6ade
       environment:
         BUNDLE_GEMFILE: /app/Gemfile
         SIMPLECOV: true
