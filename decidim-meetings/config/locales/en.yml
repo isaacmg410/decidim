@@ -2,6 +2,10 @@
 en:
   activemodel:
     attributes:
+      agenda:
+        description: Description
+        duration: Duration
+        title: Title
       close_meeting:
         attendees_count: Number of attendees
         attending_organizations: List of organizations that attended
@@ -78,6 +82,7 @@ en:
           notification_title: The <a href="%{resource_path}">%{resource_title}</a> meeting will start in less than 48h.
     meetings:
       actions:
+        agenda: Agenda
         attachment_collections: Collections
         attachments: Attachments
         close: Close
@@ -89,6 +94,26 @@ en:
         registrations: Registrations
         title: Actions
       admin:
+        agenda:
+          agenda_item:
+            add_agenda_item: Add agenda item
+            agenda_item: Agenda Item
+            down: Down
+            remove: Remove
+            up: Up
+          edit:
+            update: Update
+          form:
+            add_agenda_item: Add agenda item
+          index:
+            agenda: Agenda
+            end_date: End date
+            meeting: Meeting
+            start_date: Start date
+            title: Agenda Items
+          new:
+            title: New agenda
+            create: Create
         exports:
           registrations: Registrations
         invite_join_meeting_mailer:
@@ -137,6 +162,8 @@ en:
             invalid: There's been a problem updating this meeting
             success: Meeting successfully updated
         models:
+          agenda_item:
+            name: Agenda Item
           meeting:
             name: Meeting
         registrations:
