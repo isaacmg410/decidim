@@ -10,8 +10,9 @@ module Decidim
       include Decidim::Traceable
       include Decidim::Loggable
 
-      belongs_to :agenda, foreign_key: "decidim_agenda_id", class_name: "Decidim::Meetings::Agenda"
+      belongs_to :agenda, -> { order(:position) }, foreign_key: "decidim_agenda_id", class_name: "Decidim::Meetings::Agenda"
 
+      default_scope { order(:position) }
       # validates :title, presence: true
       # validate  :description, presence: true
 

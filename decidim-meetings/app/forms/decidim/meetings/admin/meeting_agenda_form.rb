@@ -8,15 +8,20 @@ module Decidim
         include TranslatableAttributes
 
         translatable_attribute :title, String
-        attribute :agenda_items, Array[MeetingAgendaItemForm]
+        attribute :agenda_items, Array[MeetingAgendaItemsForm]
 
-        # validates :title, translatable_presence: true
+        validates :title, translatable_presence: true
 
         def map_model(model)
           self.agenda_items = model.agenda_items.map do |agenda_item|
-            # MeetingAgendaItemForm.from_model(agenda_item)
-            MeetingAgendaItemForm.new(agenda_item)
+            #MeetingAgendaItemsForm.from_model(agenda_item)
+            MeetingAgendaItemsForm.from_model(agenda_item)
           end
+        end
+
+
+        def number_of_agenda_items
+          agenda_items.size
         end
 
       end

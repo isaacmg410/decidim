@@ -8,8 +8,8 @@ module Decidim
       include Decidim::Traceable
       include Decidim::Loggable
 
-      belongs_to :meeting, -> { order(:position) }, foreign_key: "decidim_meeting_id", class_name: "Decidim::Meetings::Meeting"
-      has_many :agenda_items, foreign_key: "decidim_agenda_id", class_name: "Decidim::Meetings::AgendaItem", dependent: :destroy
+      belongs_to :meeting, foreign_key: "decidim_meeting_id", class_name: "Decidim::Meetings::Meeting"
+      has_many :agenda_items, foreign_key: "decidim_agenda_id", class_name: "Decidim::Meetings::AgendaItem", dependent: :destroy, inverse_of: :agenda
 
       # validates :title, presence: true
 

@@ -34,7 +34,6 @@ module Decidim
 
         def update
           @form = form(MeetingAgendaForm).from_params(params)
-          raise
 
           UpdateAgenda.call(@form, meeting, agenda) do
             on(:ok) do
@@ -60,7 +59,7 @@ module Decidim
         end
 
         def blank_agenda_item
-          @blank_agenda_item ||= Admin::MeetingAgendaItemForm.new
+          @blank_agenda_item ||= Admin::MeetingAgendaItemsForm.new
         end
       end
     end

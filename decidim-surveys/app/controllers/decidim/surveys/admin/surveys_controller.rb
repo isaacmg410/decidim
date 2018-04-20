@@ -16,7 +16,6 @@ module Decidim
           authorize! :update, Survey
           params["published_at"] = Time.current if params.has_key? "save_and_publish"
 
-          raise
           @form = form(Admin::SurveyForm).from_params(params)
 
           Admin::UpdateSurvey.call(@form, survey) do
