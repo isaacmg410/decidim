@@ -21,9 +21,8 @@ module Decidim
         # validates :position, numericality: { greater_than_or_equal_to: 0 }, unless: :deleted
 
         def to_param
-          id || "agenda-agenda-item-id"
+          id || "agenda-item-id"
         end
-
       end
     end
   end

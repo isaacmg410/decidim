@@ -14,12 +14,9 @@ module Decidim
 
         def map_model(model)
           self.agenda_items = model.agenda_items.map do |agenda_item|
-            MeetingAgendaItemForm.from_model(agenda_item)
+            # MeetingAgendaItemForm.from_model(agenda_item)
+            MeetingAgendaItemForm.new(agenda_item)
           end
-        end
-
-        def agenda_items_to_persist
-          agenda_items.reject(&:deleted)
         end
 
       end

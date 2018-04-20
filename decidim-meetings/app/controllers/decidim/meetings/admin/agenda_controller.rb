@@ -62,8 +62,6 @@ module Decidim
         def blank_agenda_item
           @blank_agenda_item ||= Admin::MeetingAgendaItemForm.new
         end
-
-
       end
     end
   end
