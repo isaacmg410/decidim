@@ -6,7 +6,7 @@ module Decidim
       # Controller that allows managing the agendas for the given meeting
       #
       class AgendaController < Admin::ApplicationController
-        helper_method :meeting, :agenda, :blank_agenda_item
+        helper_method :meeting, :agenda, :blank_agenda_item, :blank_agenda_item_child
 
         def new
           @form = form(MeetingAgendaForm).instance
@@ -14,7 +14,7 @@ module Decidim
 
         def create
           @form = form(MeetingAgendaForm).from_params(params)
-          
+
           CreateAgenda.call(@form, meeting) do
             on(:ok) do
               flash[:notice] = I18n.t("agenda.create.success", scope: "decidim.meetings.admin")
@@ -59,6 +59,10 @@ module Decidim
         end
 
         def blank_agenda_item
+          @blank_agenda_item ||= Admin::MeetingAgendaItemsForm.new
+        end
+
+        def blank_agenda_item_child
           @blank_agenda_item ||= Admin::MeetingAgendaItemsForm.new
         end
       end

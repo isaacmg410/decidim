@@ -80,6 +80,10 @@ module Decidim
         return true if participatory_space.try(:private_space?) && participatory_space.users.include?(user)
         return false if participatory_space.try(:private_space?) && participatory_space.try(:is_transparent?)
       end
+
+      def meeting_duration
+        minutes = ((end_time - start_time) * 24 * 60).to_i
+      end
     end
   end
 end

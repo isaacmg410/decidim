@@ -20,6 +20,7 @@ module Decidim
         # Broadcasts :ok if successful, :invalid otherwise.
         def call
           return broadcast(:invalid) if form.invalid?
+          # return broadcast(:invalid) if @meeting.meeting_duration < form.agenda_items.sum(&:duration)
 
           transaction do
             update_meeting!

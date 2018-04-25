@@ -16,7 +16,7 @@ module Decidim
         # Broadcasts :ok if successful, :invalid otherwise.
         def call
           return broadcast(:invalid) if @form.invalid?
-          return broadcast(:invalid) if meeting_duration < @form.agenda_items.sum(&:duration)
+          # return broadcast(:invalid) if @meeting.meeting_duration < @form.agenda_items.sum(&:duration)
 
           transaction do
             create_agenda!
@@ -85,13 +85,6 @@ module Decidim
             title: @form.title,
             meeting: @meeting
           )
-        end
-
-        def meeting_duration
-          start_date = @meeting.start_time
-          end_date = @meeting.end_time
-
-          minutes = ((end_date - start_date) * 24 * 60).to_i
         end
       end
     end
