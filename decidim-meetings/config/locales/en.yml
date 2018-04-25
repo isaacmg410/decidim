@@ -97,7 +97,16 @@ en:
         agenda:
           agenda_item:
             add_agenda_item: Add agenda item
+            add_agenda_item_child: Add agenda item child
             agenda_item: Agenda Item
+            agenda_item_childs: Agenda Item Childs
+            attachment_legend: Attachments
+            down: Down
+            remove: Remove
+            up: Up
+          agenda_item_child:
+            add_agenda_item_child: Add agenda item child
+            agenda_item_child: Agenda Item Child
             down: Down
             remove: Remove
             up: Up
@@ -105,11 +114,12 @@ en:
             update: Update
           form:
             add_agenda_item: Add agenda item
-          index:
-            agenda: Agenda
+            agenda_items: Agenda items
             end_date: End date
-            meeting: Meeting
             start_date: Start date
+          index:
+            agenda: Agenda          
+            meeting: Meeting
             title: Agenda Items
           new:
             title: New agenda

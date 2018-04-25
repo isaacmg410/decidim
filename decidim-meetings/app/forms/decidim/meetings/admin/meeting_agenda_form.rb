@@ -14,11 +14,9 @@ module Decidim
 
         def map_model(model)
           self.agenda_items = model.agenda_items.map do |agenda_item|
-            #MeetingAgendaItemsForm.from_model(agenda_item)
             MeetingAgendaItemsForm.from_model(agenda_item)
           end
         end
-
 
         def number_of_agenda_items
           agenda_items.size

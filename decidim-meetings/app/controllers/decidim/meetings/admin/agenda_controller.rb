@@ -14,7 +14,7 @@ module Decidim
 
         def create
           @form = form(MeetingAgendaForm).from_params(params)
-
+          
           CreateAgenda.call(@form, meeting) do
             on(:ok) do
               flash[:notice] = I18n.t("agenda.create.success", scope: "decidim.meetings.admin")

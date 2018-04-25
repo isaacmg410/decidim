@@ -1,5 +1,6 @@
 ((exports) => {
   const { AutoLabelByPositionComponent, AutoButtonsByPositionComponent, createDynamicFields, createSortList } = exports.DecidimAdmin;
+  const { createQuillEditor } = exports.Decidim;
 
   const wrapperSelector = ".meeting-agenda-items";
   const fieldSelector = ".meeting-agenda-item";
@@ -45,8 +46,12 @@
     removeFieldButtonSelector: ".remove-agenda-item",
     moveUpFieldButtonSelector: ".move-up-agenda-item",
     moveDownFieldButtonSelector: ".move-down-agenda-item",
-    onAddField: () => {
+    onAddField: ($field) => {
       createSortableList();
+
+      $field.find(".editor-container").each((idx, el) => {
+        createQuillEditor(el);
+      });
 
       autoLabelByPosition.run();
       autoButtonsByPosition.run();

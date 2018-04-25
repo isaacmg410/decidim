@@ -16,6 +16,7 @@ module Decidim
         # Broadcasts :ok if successful, :invalid otherwise.
         def call
           return broadcast(:invalid) if @form.invalid?
+          return broadcast(:invalid) if meeting_duration < @form.agenda_items.sum(&:duration)
 
           transaction do
             create_agenda!
@@ -27,7 +28,7 @@ module Decidim
 
         private
 
-        attr_reader :form
+        attr_reader :form, :meeting
 
         def create_agenda_items
           @form.agenda_items.each do |form_agenda_item|
@@ -35,8 +36,8 @@ module Decidim
           end
         end
 
-
         def create_agenda_item(form_agenda_item)
+
           agenda_item_attributes = {
             title: form_agenda_item.title,
             description: form_agenda_item.description,
@@ -61,18 +62,19 @@ module Decidim
         end
 
         def create_nested_model(form, attributes, agenda_item_childs)
-          record = Decidim::Meetings::AgendaItem.find_or_create_by!(attributes)
+          @record = Decidim::Meetings::AgendaItem.find_or_create_by!(attributes)
+
           #
           # yield record if block_given?
           #
-          if record.persisted?
+          if @record.persisted?
             if form.deleted?
-              record.destroy!
+              @record.destroy!
             else
-              record.update!(attributes)
+              @record.update!(attributes)
             end
           else
-            record.save!
+            @record.save!
           end
         end
 
@@ -83,6 +85,13 @@ module Decidim
             title: @form.title,
             meeting: @meeting
           )
+        end
+
+        def meeting_duration
+          start_date = @meeting.start_time
+          end_date = @meeting.end_time
+
+          minutes = ((end_date - start_date) * 24 * 60).to_i
         end
       end
     end
