@@ -47,11 +47,14 @@
         <% end %>
       </template>
 
+      <%#raise%>
       <div class="meeting-agenda-items-list">
         <% @form.agenda_items.each do |agenda_item| %>
-          <%= fields_for "meeting_agenda[agenda_items][]", agenda_item do |agenda_item_form| %>
-            <%= render "agenda_item", form: agenda_item_form, id: tabs_id_for_agenda_item(agenda_item), editable: true %>
-          <% end %>
+          <%# if agenda_item.parent_id == nil %>
+            <%= fields_for "meeting_agenda[agenda_items][]", agenda_item do |agenda_item_form| %>
+              <%= render "agenda_item", form: agenda_item_form, id: tabs_id_for_agenda_item(agenda_item), editable: true %>
+            <% end %>
+          <%# end %>
         <% end %>
       </div>
 

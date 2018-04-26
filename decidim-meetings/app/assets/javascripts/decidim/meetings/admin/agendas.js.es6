@@ -4,6 +4,8 @@
 
   const wrapperSelector = ".meeting-agenda-items";
   const fieldSelector = ".meeting-agenda-item";
+  const childsWrapperSelector = ".meeting-agenda-item-childs";
+  const childFieldSelector = ".meeting-agenda-item-child";
 
   const autoLabelByPosition = new AutoLabelByPositionComponent({
     listSelector: ".meeting-agenda-item:not(.hidden)",
@@ -28,6 +30,104 @@
     });
   };
 
+  const createSortableListChild = () => {
+    createSortList(".meeting-agenda-item-childs-list:not(.published)", {
+      handle: ".agenda-item-child-divider",
+      placeholder: '<div style="border-style: dashed; border-color: #000"></div>',
+      forcePlaceholderSize: true,
+      onSortUpdate: () => { autoLabelByPosition.run() }
+    });
+  };
+
+  const autoLabelByPositionChild = new AutoLabelByPositionComponent({
+    listSelector: ".meeting-agenda-item-child:not(.hidden)",
+    labelSelector: ".card-title span:first",
+    onPositionComputed: (el, idx) => {
+      $(el).find("input[name$=\\[position\\]]").val(idx);
+    }
+  });
+
+  const autoButtonsByPositionChild = new AutoButtonsByPositionComponent({
+    listSelector: ".meeting-agenda-item-child:not(.hidden)",
+    hideOnFirstSelector: ".move-up-agenda-item-child",
+    hideOnLastSelector: ".move-down-agenda-item-child"
+  });
+
+  const createDynamicFieldsForAgendaItemChilds = (fieldId) => {
+    // const autoButtons = createAutoButtonsByMinItemsForAnswerOptions(fieldId);
+    // const autoSelectOptions = createAutoMaxChoicesByNumberOfAnswerOptions(fieldId);
+
+    return createDynamicFields({
+      placeholderId: "meeting-agenda-item-child-id",
+      wrapperSelector: `#${fieldId} ${childsWrapperSelector}`,
+      containerSelector: ".meeting-agenda-item-childs-list",
+      fieldSelector: childFieldSelector,
+      addFieldButtonSelector: ".add-agenda-item-child",
+      removeFieldButtonSelector: ".remove-agenda-item-child",
+      moveUpFieldButtonSelector: ".move-up-agenda-item-child",
+      moveDownFieldButtonSelector: ".move-down-agenda-item-child",
+
+      onAddField: ($field) => {
+        createSortableListChild();
+
+        $field.find(".editor-container").each((idx, el) => {
+          createQuillEditor(el);
+        });
+
+        autoLabelByPositionChild.run();
+        autoButtonsByPositionChild.run();
+      },
+      onRemoveField: () => {
+        autoLabelByPositionChild.run();
+        autoButtonsByPositionChild.run();
+      },
+      onMoveUpField: () => {
+        autoLabelByPositionChild.run();
+        autoButtonsByPositionChild.run();
+      },
+      onMoveDownField: () => {
+        autoLabelByPositionChild.run();
+        autoButtonsByPositionChild.run();
+      }
+    });
+  };
+
+  const dynamicFieldsForAgendaItemChilds = {};
+
+  const setupInitialAgendaItemChildAttributes = ($target) => {
+    const fieldId = $target.attr("id");
+    // const $fieldQuestionTypeSelect = $target.find(questionTypeSelector);
+
+    // createFieldDependentInputs({
+    //   controllerField: $fieldQuestionTypeSelect,
+    //   wrapperSelector: fieldSelector,
+    //   dependentFieldsSelector: answerOptionsWrapperSelector,
+    //   dependentInputSelector: `${answerOptionFieldSelector} input`,
+    //   enablingCondition: ($field) => {
+    //     return isMultipleChoiceOption($field);
+    //   }
+    // });
+
+    dynamicFieldsForAgendaItemChilds[fieldId] = createDynamicFieldsForAgendaItemChilds(fieldId);
+
+    const dynamicFields = dynamicFieldsForAgendaItemChilds[fieldId];
+    //
+    // const onQuestionTypeChange = () => {
+    //   if (isMultipleChoiceOption($fieldQuestionTypeSelect)) {
+    //     const nOptions = $fieldQuestionTypeSelect.parents(fieldSelector).find(answerOptionFieldSelector).length;
+    //
+    //     if (nOptions === 0) {
+    //       dynamicFields._addField();
+    //       dynamicFields._addField();
+    //     }
+    //   }
+    // };
+    //
+    // $fieldQuestionTypeSelect.on("change", onQuestionTypeChange);
+    //
+    // onQuestionTypeChange();
+  }
+
   const hideDeletedAgendaItem = ($target) => {
     const inputDeleted = $target.find("input[name$=\\[deleted\\]]").val();
 
@@ -47,6 +147,8 @@
     moveUpFieldButtonSelector: ".move-up-agenda-item",
     moveDownFieldButtonSelector: ".move-down-agenda-item",
     onAddField: ($field) => {
+      // createDynamicFieldsForAgendaItemChilds($field);
+      setupInitialAgendaItemChildAttributes($field);
       createSortableList();
 
       $field.find(".editor-container").each((idx, el) => {
@@ -76,8 +178,12 @@
     const $target = $(el);
 
     hideDeletedAgendaItem($target);
+    setupInitialAgendaItemChildAttributes($target);
+    // createDynamicFieldsForAgendaItemChilds($target)
   });
 
   autoLabelByPosition.run();
   autoButtonsByPosition.run();
+  autoLabelByPositionChild.run();
+  autoButtonsByPositionChild.run();
 })(window);

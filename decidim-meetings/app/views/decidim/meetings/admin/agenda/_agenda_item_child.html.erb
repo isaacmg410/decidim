@@ -1,30 +1,26 @@
 <% agenda_item_child = form.object %>
-<div class="card meeting-agenda-item-child" id="<%= id %>-field">
-  <div class="card-divider agenda-item-divider">
+<div class="card meeting-agenda-item-child" id="<%= id %>-child-<%= id_child %>-field">
+  <div class="card-divider agenda-item-child-divider">
     <h2 class="card-title">
       <span>
-        <%#== "#{icon("move")} #{t(".agenda_item")}" %>
-        <%== "#{icon("move")} subitem" %>
+        <%== "#{icon("move")} #{t(".agenda_item_child")}" %>
       </span>
 
-      <button class="button small alert hollow move-up-agenda-item button--title">
-        <%#== "#{icon("arrow-top")} #{t(".up")}" %>
-        <%== "#{icon("arrow-top")} up" %>
+      <button class="button small alert hollow move-up-agenda-item-child button--title">
+        <%== "#{icon("arrow-top")} #{t(".up")}" %>
       </button>
 
-      <button class="button small alert hollow move-down-agenda-item button--title">
-        <%#== "#{icon("arrow-bottom")} #{t(".down")}" %>
-        <%== "#{icon("arrow-bottom")} down" %>
+      <button class="button small alert hollow move-down-agenda-item-child button--title">
+        <%== "#{icon("arrow-bottom")} #{t(".down")}" %>
       </button>
 
       <button class="button small alert hollow remove-agenda-item-child button--title">
-        <%#= t(".remove") %>
-        remove
+        <%= t(".remove") %>
       </button>
     </h2>
   </div>
 
   <div class="card-section">
-    <%= render 'agenda_item_fields', id: id, form: form, agenda_item: agenda_item_child  %>
+    <%= render 'agenda_item_fields', id: id_child, form: form, agenda_item: agenda_item_child  %>
   </div>
 </div>

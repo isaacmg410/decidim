@@ -14,17 +14,24 @@ module Decidim
         attribute :parent_id, Integer
         attribute :position, Integer
         attribute :deleted, Boolean, default: false
-        attribute :attachments, AttachmentForm
+        attribute :agenda_item_childs, Array[MeetingAgendaItemsForm]
 
         validates :title, translatable_presence: true, unless: :deleted
         validates :position, numericality: { greater_than_or_equal_to: 0 }, unless: :deleted
         validates :duration, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
-
         def to_param
           id || "meeting-agenda-item-id"
         end
 
+        def to_param_child
+          id || "meeting-agenda-item-child-id"
+        end
+
+        # def duration
+        #
+        #   self.duration + self.agenda_item_childs.sum(&:duration)
+        # end
       end
     end
   end

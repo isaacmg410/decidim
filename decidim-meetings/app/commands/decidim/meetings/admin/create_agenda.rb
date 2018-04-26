@@ -47,34 +47,37 @@ module Decidim
             agenda: @agenda,
             }
 
-          create_nested_model(form_agenda_item, agenda_item_attributes, @form.agenda_items)
-          # create_nested_model(form_agenda_item, agenda_item_attributes, @form.agenda_items) do |agenda_item|
-          #   form_agenda_item.agenda_item_childs.each do |form_agenda_item_child|
-          #     agenda_item_child_attributes = {
-          #       title: form_agenda_item_child.title,
-          #       description: form_agenda_item_child.description,
-          #       position: form_agenda_item_child.position
-          #     }
-          #
-          #     create_nested_model(form_agenda_item, agenda_item_child_attributes, agenda_item.agenda_item_childs)
-          #   end
-          # end
+          # create_nested_model(form_agenda_item, agenda_item_attributes, @form.agenda_items)
+
+          create_nested_model(form_agenda_item, agenda_item_attributes, @form.agenda_items) do |agenda_item|
+            form_agenda_item.agenda_item_childs.each do |form_agenda_item_child|
+              agenda_item_child_attributes = {
+                title: form_agenda_item_child.title,
+                description: form_agenda_item_child.description,
+                position: form_agenda_item_child.position,
+                duration: form_agenda_item_child.duration,
+                parent_id: agenda_item.id,
+                agenda: @agenda,
+                }
+
+              create_nested_model(form_agenda_item_child, agenda_item_child_attributes, agenda_item.agenda_item_childs)
+            end
+          end
         end
 
         def create_nested_model(form, attributes, agenda_item_childs)
-          @record = Decidim::Meetings::AgendaItem.find_or_create_by!(attributes)
+          record = Decidim::Meetings::AgendaItem.find_or_create_by!(attributes)
 
-          #
-          # yield record if block_given?
-          #
-          if @record.persisted?
+          yield record if block_given?
+
+          if record.persisted?
             if form.deleted?
-              @record.destroy!
+              record.destroy!
             else
-              @record.update!(attributes)
+              record.update!(attributes)
             end
           else
-            @record.save!
+            record.save!
           end
         end
 

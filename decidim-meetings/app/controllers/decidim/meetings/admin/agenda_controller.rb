@@ -13,7 +13,8 @@ module Decidim
         end
 
         def create
-          @form = form(MeetingAgendaForm).from_params(params)
+
+          @form = form(MeetingAgendaForm).from_params(params).with_context(current_organization: meeting.organization, meeting: meeting)
 
           CreateAgenda.call(@form, meeting) do
             on(:ok) do
@@ -33,7 +34,7 @@ module Decidim
         end
 
         def update
-          @form = form(MeetingAgendaForm).from_params(params)
+          @form = form(MeetingAgendaForm).from_params(params).with_context(current_organization: meeting.organization, meeting: meeting)
 
           UpdateAgenda.call(@form, meeting, agenda) do
             on(:ok) do
@@ -59,10 +60,6 @@ module Decidim
         end
 
         def blank_agenda_item
-          @blank_agenda_item ||= Admin::MeetingAgendaItemsForm.new
-        end
-
-        def blank_agenda_item_child
           @blank_agenda_item ||= Admin::MeetingAgendaItemsForm.new
         end
       end

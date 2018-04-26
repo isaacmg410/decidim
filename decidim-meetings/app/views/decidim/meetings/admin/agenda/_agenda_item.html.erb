@@ -25,25 +25,24 @@
 
     <div class="card">
       <div class="card-divider">
-        <h2 class="card-title">Agenda Item childs<%#= t(".agenda_items")%></h2>
+        <h2 class="card-title"><%= t(".agenda_item_childs")%></h2>
       </div>
       <div class="card-section">
         <div class="meeting-agenda-item-childs">
           <template>
-            <%= fields_for "meeting_agenda[agenda_items][#{agenda_item.to_param}][#{blank_agenda_item_child.to_param}]", blank_agenda_item_child do |agenda_item_child_form| %>
-              <%= render "agenda_item_child", form: agenda_item_child_form, id: tabs_id_for_agenda_item(agenda_item_child_form), editable: true %>
+            <%= fields_for "meeting_agenda[agenda_items][#{agenda_item.to_param}][agenda_item_childs][#{blank_agenda_item.to_param_child}]", blank_agenda_item do |agenda_item_child_form| %>
+              <%= render "agenda_item_child", form: agenda_item_child_form, id: id, id_child: tabs_id_for_agenda_item_child(blank_agenda_item), editable: true %>
             <% end %>
           </template>
 
           <div class="meeting-agenda-item-childs-list">
-            <%# @form.agenda_items.each do |agenda_item| %>
-              <%#= fields_for "meeting_agenda[agenda_items][]", agenda_item do |agenda_item_form| %>
-                <%#= render "agenda_item", form: agenda_item_form, id: tabs_id_for_agenda_item(agenda_item), editable: true %>
-              <%# end %>
-            <%# end %>
+            <% agenda_item.agenda_item_childs.each do |agenda_item_child| %>
+              <%= fields_for "meeting_agenda[agenda_items][#{agenda_item.to_param}][agenda_item_childs][]", agenda_item_child do |agenda_item_child_form| %>
+                <%= render "agenda_item_child", form: agenda_item_child_form, id: id, id_child: tabs_id_for_agenda_item_child(agenda_item_child), editable: true %>
+              <% end %>
+            <% end %>
           </div>
-
-          <button class="button add-agenda-item-child">Add subitem<%#= t(".add_agenda_item") %></button>
+          <button class="button add-agenda-item-child"><%= t(".add_agenda_item_child") %></button>
         </div>
       </div>
     </div>
