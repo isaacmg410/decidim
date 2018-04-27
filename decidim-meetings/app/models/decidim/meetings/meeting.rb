@@ -82,7 +82,7 @@ module Decidim
       end
 
       def meeting_duration
-        minutes = ((end_time - start_time) * 24 * 60).to_i
+        ((end_time - start_time) * 24 * 60).to_i
       end
     end
   end

@@ -96,36 +96,9 @@
 
   const setupInitialAgendaItemChildAttributes = ($target) => {
     const fieldId = $target.attr("id");
-    // const $fieldQuestionTypeSelect = $target.find(questionTypeSelector);
-
-    // createFieldDependentInputs({
-    //   controllerField: $fieldQuestionTypeSelect,
-    //   wrapperSelector: fieldSelector,
-    //   dependentFieldsSelector: answerOptionsWrapperSelector,
-    //   dependentInputSelector: `${answerOptionFieldSelector} input`,
-    //   enablingCondition: ($field) => {
-    //     return isMultipleChoiceOption($field);
-    //   }
-    // });
 
     dynamicFieldsForAgendaItemChilds[fieldId] = createDynamicFieldsForAgendaItemChilds(fieldId);
 
-    const dynamicFields = dynamicFieldsForAgendaItemChilds[fieldId];
-    //
-    // const onQuestionTypeChange = () => {
-    //   if (isMultipleChoiceOption($fieldQuestionTypeSelect)) {
-    //     const nOptions = $fieldQuestionTypeSelect.parents(fieldSelector).find(answerOptionFieldSelector).length;
-    //
-    //     if (nOptions === 0) {
-    //       dynamicFields._addField();
-    //       dynamicFields._addField();
-    //     }
-    //   }
-    // };
-    //
-    // $fieldQuestionTypeSelect.on("change", onQuestionTypeChange);
-    //
-    // onQuestionTypeChange();
   }
 
   const hideDeletedAgendaItem = ($target) => {

@@ -14,10 +14,6 @@ module Decidim
       def self.log_presenter_class_for(_log)
         Decidim::Meetings::AdminLog::AgendaPresenter
       end
-
-      def agenda_duration
-        Decidim::Meetings::AgendaItem.where(agenda: self.id).sum(&:duration)
-      end
     end
   end
 end

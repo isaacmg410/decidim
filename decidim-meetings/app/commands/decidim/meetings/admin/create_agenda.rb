@@ -9,6 +9,7 @@ module Decidim
         def initialize(form, meeting)
           @form = form
           @meeting = meeting
+          @agenda = nil
         end
 
         # Creates the agenda if valid.
@@ -20,7 +21,6 @@ module Decidim
 
           transaction do
             create_agenda!
-            create_agenda_items
           end
 
           broadcast(:ok, @agenda)
@@ -37,15 +37,14 @@ module Decidim
         end
 
         def create_agenda_item(form_agenda_item)
-
           agenda_item_attributes = {
             title: form_agenda_item.title,
             description: form_agenda_item.description,
             position: form_agenda_item.position,
             duration: form_agenda_item.duration,
             parent_id: form_agenda_item.parent_id,
-            agenda: @agenda,
-            }
+            agenda: @agenda
+          }
 
           # create_nested_model(form_agenda_item, agenda_item_attributes, @form.agenda_items)
 
@@ -57,8 +56,8 @@ module Decidim
                 position: form_agenda_item_child.position,
                 duration: form_agenda_item_child.duration,
                 parent_id: agenda_item.id,
-                agenda: @agenda,
-                }
+                agenda: @agenda
+              }
 
               create_nested_model(form_agenda_item_child, agenda_item_child_attributes, agenda_item.agenda_item_childs)
             end
@@ -66,7 +65,7 @@ module Decidim
         end
 
         def create_nested_model(form, attributes, agenda_item_childs)
-          record = Decidim::Meetings::AgendaItem.find_or_create_by!(attributes)
+          record = agenda_item_childs.find_by(id: form.id) || agenda_item_childs.build(attributes)
 
           yield record if block_given?
 
@@ -88,6 +87,7 @@ module Decidim
             title: @form.title,
             meeting: @meeting
           )
+          create_agenda_items
         end
       end
     end

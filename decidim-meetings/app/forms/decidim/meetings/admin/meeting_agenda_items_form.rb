@@ -27,11 +27,6 @@ module Decidim
         def to_param_child
           id || "meeting-agenda-item-child-id"
         end
-
-        # def duration
-        #
-        #   self.duration + self.agenda_item_childs.sum(&:duration)
-        # end
       end
     end
   end

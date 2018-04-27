@@ -53,8 +53,8 @@ module Decidim
                 position: form_agenda_item_child.position,
                 duration: form_agenda_item_child.duration,
                 parent_id: agenda_item.id,
-                agenda: @agenda,
-                }
+                agenda: @agenda
+              }
 
               update_nested_model(form_agenda_item_child, agenda_item_child_attributes, agenda_item.agenda_item_childs)
             end
@@ -62,7 +62,6 @@ module Decidim
         end
 
         def update_nested_model(form, attributes, agenda_item_childs)
-
           record = agenda_item_childs.find_by(id: form.id) || agenda_item_childs.build(attributes)
           # record = Decidim::Meetings::AgendaItem.find_or_create_by!(attributes)
 
@@ -83,7 +82,7 @@ module Decidim
           Decidim.traceability.update!(
             agenda,
             form.current_user,
-            title: form.title,
+            title: form.title
           )
         end
       end

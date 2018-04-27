@@ -19,49 +19,34 @@ module Decidim
           end
         end
 
-
         private
 
         def meeting
           @meeting ||= context[:meeting]
         end
 
-        # def max_choices
-        #   errors.add(:choices, :too_many) if selected_choices.size > question.max_choices
-        # end
-        #
-        # def all_choices
-        #   errors.add(:choices, :missing) if selected_choices.size != question.number_of_options
-        # end
-        #
-        # def mandatory_label
-        #   "*"
-        # end
-        #
-        # def max_choices_label
-        #   I18n.t("surveys.question.max_choices", scope: "decidim.surveys", n: question.max_choices)
-        # end
-
         def total_agenda_duration_lower_than_meeting_duration
-          puts "-----------------"
-          puts "#{agenda_duration}"
-          puts "-----------------"
-          puts "#{meeting_duration}"
-          errors.add(:agenda_duration, :too_many) if agenda_duration > meeting_duration
-
+          difference = agenda_duration - meeting_duration
+          errors.add(:base, :too_many_minutes, count: difference) if agenda_duration > meeting_duration
         end
 
         def agenda_duration
-          duration = Decidim::Meetings::AgendaItem.where(agenda: self.id).sum(&:duration)
+          duration = 0
+          duration_childs = 0
+
+          duration += agenda_items.sum(&:duration)
+          agenda_items.each do |agenda_item|
+            duration_childs += agenda_item.agenda_item_childs.sum(&:duration)
+          end
+          duration + duration_childs
         end
 
         def meeting_duration
           start_time = meeting.start_time
           end_time = meeting.end_time
 
-          duration = ((end_time - start_time)/ 1.minute).round
+          ((end_time - start_time) / 1.minute).round
         end
-
       end
     end
   end

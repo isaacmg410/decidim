@@ -25,6 +25,12 @@ en:
         registrations_enabled: Registrations enabled
         start_time: Start Time
         title: Title
+    errors:
+      models:
+        meeting_agenda:
+          attributes:
+            base:
+              too_many_minutes: The duration of the items exceed the meeting duration by %{count} minutes
   decidim:
     admin:
       meeting_copies:

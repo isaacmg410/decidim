@@ -3,7 +3,7 @@
     <%= form.translated :text_field, :title, tabs_id: id %>
   </div>
   <div class="cell small-2">
-    <%= form.number_field :duration, tabs_id: id, min: 0  %>
+    <%= form.number_field :duration, tabs_id: id, min: 0 %>
   </div>
 </div>
 
@@ -15,5 +15,5 @@
 
 <%= form.hidden_field :id %>
 <%= form.hidden_field :parent_id %>
-<%= form.hidden_field :position, value: agenda_item.position || 0  %>
-<%= form.hidden_field :deleted  %>
+<%= form.hidden_field :position, value: agenda_item.position || 0 %>
+<%= form.hidden_field :deleted %>
