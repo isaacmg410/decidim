@@ -13,8 +13,7 @@ module Decidim
         end
 
         def create
-          # @form = form(MeetingAgendaForm).from_params(params).with_context(current_organization: meeting.organization, meeting: meeting)
-          @form = form(MeetingAgendaForm).from_params(params)
+          @form = form(MeetingAgendaForm).from_params(params, meeting: meeting)
 
           CreateAgenda.call(@form, meeting) do
             on(:ok) do
@@ -34,8 +33,8 @@ module Decidim
         end
 
         def update
-          @form = form(MeetingAgendaForm).from_params(params).with_context(current_organization: meeting.organization, meeting: meeting)
-
+          @form = form(MeetingAgendaForm).from_params(params, meeting: meeting)
+          
           UpdateAgenda.call(@form, meeting, agenda) do
             on(:ok) do
               flash[:notice] = I18n.t("agenda.update.success", scope: "decidim.meetings.admin")

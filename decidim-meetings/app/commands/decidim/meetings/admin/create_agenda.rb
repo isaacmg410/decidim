@@ -17,7 +17,6 @@ module Decidim
         # Broadcasts :ok if successful, :invalid otherwise.
         def call
           return broadcast(:invalid) if @form.invalid?
-          # return broadcast(:invalid) if @meeting.meeting_duration < @form.agenda_items.sum(&:duration)
 
           transaction do
             create_agenda!
@@ -46,8 +45,6 @@ module Decidim
             agenda: @agenda
           }
 
-          # create_nested_model(form_agenda_item, agenda_item_attributes, @form.agenda_items)
-
           create_nested_model(form_agenda_item, agenda_item_attributes, @form.agenda_items) do |agenda_item|
             form_agenda_item.agenda_item_childs.each do |form_agenda_item_child|
               agenda_item_child_attributes = {
@@ -65,7 +62,7 @@ module Decidim
         end
 
         def create_nested_model(form, attributes, agenda_item_childs)
-          record = agenda_item_childs.find_by(id: form.id) || agenda_item_childs.build(attributes)
+          record = Decidim::Meetings::AgendaItem.find_or_create_by!(attributes)
 
           yield record if block_given?
 
