@@ -1,3 +1,7 @@
+/* eslint-disable require-jsdoc, func-style */
+/* eslint no-use-before-define: ["error", { "variables": false }] */
+/* global Tribute*/
+
 // = require tribute
 
 $(() => {
@@ -8,31 +12,48 @@ $(() => {
   // EXAMPLE DATA
   // tag & name properties are mandatory
   //
-  const sources = [{
-      "tag": "barrera",
-      "name": "Collins Franklin",
-    },
-    {
-      "tag": "woods",
-      "name": "Nadine Buck",
-    }]
+  // const sources = [{
+  //     "tag": "barrera",
+  //     "name": "Collins Franklin",
+  //   },
+  //   {
+  //     "tag": "woods",
+  //     "name": "Nadine Buck",
+  //   }]
 
 
   // Listener for the event triggered by quilljs
   let cursor = "";
   $hashtagContainer.on("quill-position", function(event) {
-    if (event.detail != null){
+    if (event.detail !== null) {
       cursor = event.detail.index;
     }
   });
 
+  function remoteSearch(text, cb) {
+    return $.get("/api/hashtags/hashtags", function(data) {
+      cb(data)
+    }).fail(function() {
+      cb([])
+    }).always(function () {
+      // This function runs Tribute every single time you type somthing
+      // So we must evalute DOM properties after each
+      const $parent = $(tribute.current.element).parent()
+      $parent.addClass("is-active")
+
+      // We need to move the container to the wrapper selected
+      const $tribute = $parent.find(".tribute-container");
+      // Remove the inline styles, relative to absolute positioning
+      $tribute.removeAttr("style");
+    })
+  }
+
   // tribute.js docs - http://github.com/zurb/tribute
-  /* global Tribute*/
   let tribute = new Tribute({
-    trigger: '#',
+    trigger: "#",
     // values: sources,
     values: function (text, cb) {
-      remoteSearch(text, hashtags => cb(hashtags));
+      remoteSearch(text, (hashtags) => cb(hashtags));
     },
     positionMenu: false,
     fillAttr: "name",
@@ -79,36 +100,6 @@ $(() => {
     }
   });
 
-  // function remoteSearch(text, cb) {
-  //   var URL = '/api/hashtags/hashtags';
-  //   var xhr = new XMLHttpRequest();
-  //   xhr.onreadystatechange = function ()
-  //   {
-  //     if (xhr.readyState === 4) {
-  //       if (xhr.status === 200) {
-  //         var data = JSON.parse(xhr.responseText);
-  //         cb(data);
-  //       } else if (xhr.status === 403) {
-  //         cb([]);
-  //       }
-  //     }
-  //   };
-  //   xhr.open("GET", URL + '?q=' + text, true);
-  //   xhr.send();
-  // }
-
-  /* eslint-disable require-jsdoc, func-style */
-  function remoteSearch(text, cb) {
-    return $.get("/api/hashtags/hashtags", function(data) {
-      cb(data)
-    }).fail(function() {
-      cb([])
-    }).always(function () {
-
-      $hashtagContainer.parent().find(".tribute-container").removeAttr("style")
-    })
-  }
-
   // console.log($hashtagContainer);
 
   tribute.attach($hashtagContainer);
@@ -127,23 +118,6 @@ $(() => {
     let $parent = $(event.target).parent();
 
     if ($parent.hasClass("is-active")) {
-      $parent.removeClass("is-active");
-    }
-  });
-
-  $hashtagContainer.on("focus", (event) => {
-    let $parent = $(event.target).parent();
-    $parent.removeAttr("style");
-
-    if (tribute.isActive) {
-      // We need to move the container to the wrapper selected
-      let $tribute = $parent.find(".tribute-container");
-      // Remove the inline styles, relative to absolute positioning
-      $tribute.removeAttr("style");
-      $(event.target).after($tribute);
-      // Parent adaptation
-      $parent.addClass("is-active");
-    } else {
       $parent.removeClass("is-active");
     }
   });
