@@ -34,8 +34,7 @@ $(() => {
     values: function (text, cb) {
       remoteSearch(text, hashtags => cb(hashtags));
     },
-    positionMenu: true,
-    menuContainer: null,
+    positionMenu: false,
     fillAttr: "name",
     noMatchTemplate: () => `<li>${nodatafound}</li>`,
     lookup: (item) => item.name,
@@ -80,34 +79,50 @@ $(() => {
     }
   });
 
+  // function remoteSearch(text, cb) {
+  //   var URL = '/api/hashtags/hashtags';
+  //   var xhr = new XMLHttpRequest();
+  //   xhr.onreadystatechange = function ()
+  //   {
+  //     if (xhr.readyState === 4) {
+  //       if (xhr.status === 200) {
+  //         var data = JSON.parse(xhr.responseText);
+  //         cb(data);
+  //       } else if (xhr.status === 403) {
+  //         cb([]);
+  //       }
+  //     }
+  //   };
+  //   xhr.open("GET", URL + '?q=' + text, true);
+  //   xhr.send();
+  // }
+
+  /* eslint-disable require-jsdoc, func-style */
   function remoteSearch(text, cb) {
-    var URL = '/api/hashtags/hashtags';
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function ()
-    {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          var data = JSON.parse(xhr.responseText);
-          cb(data);
-        } else if (xhr.status === 403) {
-          cb([]);
-        }
-      }
-    };
-    xhr.open("GET", URL + '?q=' + text, true);
-    xhr.send();
+    return $.get("/api/hashtags/hashtags", function(data) {
+      cb(data)
+    }).fail(function() {
+      cb([])
+    }).always(function () {
+
+      $hashtagContainer.parent().find(".tribute-container").removeAttr("style")
+    })
   }
 
   // console.log($hashtagContainer);
 
   tribute.attach($hashtagContainer);
 
+  $hashtagContainer.on("tribute-replaced", function() {
+    tribute.hideMenu()
+  });
+
   // DOM manipulation
   $hashtagContainer.on("focusin", (event) => {
     // Set the parent container relative to the current element
-
     tribute.menuContainer = event.target.parentNode;
   });
+
   $hashtagContainer.on("focusout", (event) => {
     let $parent = $(event.target).parent();
 
@@ -115,17 +130,17 @@ $(() => {
       $parent.removeClass("is-active");
     }
   });
-  $hashtagContainer.on("input", (event) => {
+
+  $hashtagContainer.on("focus", (event) => {
     let $parent = $(event.target).parent();
     $parent.removeAttr("style");
 
     if (tribute.isActive) {
       // We need to move the container to the wrapper selected
-      let $tribute = $(".tribute-container");
-
-      $tribute.removeAttr("style");
-      $tribute.appendTo($parent);
+      let $tribute = $parent.find(".tribute-container");
       // Remove the inline styles, relative to absolute positioning
+      $tribute.removeAttr("style");
+      $(event.target).after($tribute);
       // Parent adaptation
       $parent.addClass("is-active");
     } else {

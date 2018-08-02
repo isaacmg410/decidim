@@ -59,7 +59,8 @@
   .tribute-container{
     position: relative;
     min-width: 100%;
-    top: -1rem - rem-calc(1);
+    // Same as input margin-bottom
+    top: -1.5rem;
 
     ul{
       //reset list
@@ -87,6 +88,7 @@
     }
   }
 
+  .is-active,
   &.is-active{
     [contenteditable=true],
     input,
